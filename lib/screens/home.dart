@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sante_app/screens/home/widget/categories.dart';
 
 
 import 'package:sante_app/screens/home/widget/header.dart';
 import 'package:sante_app/screens/home/widget/search_input.dart';
+import 'package:sante_app/screens/home/widget/top_doctors.dart';
 
 
 class Home extends StatelessWidget {
@@ -11,6 +13,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -26,15 +29,35 @@ class Home extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
           color: Colors.white,
-          child: Column(
-            children: [
-              Header(),
-              SizedBox(height: 30,),
-              SearchInput()
-            ]
-          ),
+          child: BodyContent(),
         ),
       )
       );
+  }
+}
+
+class BodyContent extends StatefulWidget {
+  const BodyContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<BodyContent> createState() => _BodyContentState();
+}
+
+class _BodyContentState extends State<BodyContent> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Header(),
+        SizedBox(height: 30,),
+        SearchInput(),
+        SizedBox(height: 15,),
+        Categories(),
+        SizedBox(height: 30,),
+        Expanded(child: TopDoctors())
+      ]
+    );
   }
 }

@@ -14,7 +14,7 @@ class SearchInput extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 height: 50,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
+                  color: Color(0xfff4f6fa),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     bottomLeft: Radius.circular(15),
@@ -30,7 +30,7 @@ class SearchInput extends StatelessWidget {
             ),
             Container(
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: Color(0xfff4f6fa),
                 borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(15),
                     bottomRight: Radius.circular(15),
