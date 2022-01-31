@@ -1,0 +1,26 @@
+[
+    {
+        "organ": "Coeur",
+        "image": "assets/human_organ_icon/heart.png"
+    },
+    {
+        "organ": "Cerveau",
+        "image": "assets/human_organ_icon/brain.png"
+    },
+    {
+        "organ": "Rein",
+        "image": "assets/human_organ_icon/kidney.png"
+    },
+    {
+        "organ": "Poumons",
+        "image": "assets/human_organ_icon/human-lungs.png"
+    },
+    {
+        "organ": "Yeux",
+        "image": "assets/human_organ_icon/eye.png"
+    },
+    {
+        "organ": "Peau",
+        "image": "assets/human_organ_icon/skin.png"
+    }
+]

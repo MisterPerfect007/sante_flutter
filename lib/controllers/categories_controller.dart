@@ -2,5 +2,14 @@ import 'package:get/get.dart';
 
 
 class CategoriesController extends GetxController {
-  var selectedCategorie = 'Coeur'.obs;
+  var selectedCategorie = ''.obs;
+
+  setCategorie (categorie) {
+    if(selectedCategorie.value == categorie) {
+      selectedCategorie.value = '';
+    }
+    else {
+      selectedCategorie.value = categorie;
+    }
+  }
 }
