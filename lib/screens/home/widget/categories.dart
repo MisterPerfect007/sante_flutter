@@ -17,18 +17,26 @@ class Categories extends StatefulWidget {
 
 class _CategoriesState extends State<Categories> {
   final CategoriesController cc = Get.put(CategoriesController());
+  
+  dynamic categorieJsonData;
+  loadJson() async {
+      String data = await DefaultAssetBundle.of(context).loadString("assets/json/organs.json");
+      List<dynamic> list = jsonDecode(data);
+      // print(list);
+      setState(() {
+        categorieJsonData = list;
+      });
+    }
 
+    @override
+    void initState () {
+      super.initState();
+      loadJson();
+    }
   @override
   Widget build(BuildContext context) {
-
-     loadJson() async {
-      String data = await DefaultAssetBundle.of(context).loadString("assets/json/organs.json");
-      return jsonDecode(data);
-    }
-    final Future categoriesData = loadJson();
-    print(categoriesData as Map);
-
     return Container(
+      height: 150,
       width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,42 +49,19 @@ class _CategoriesState extends State<Categories> {
               ),
           ),
           SizedBox(height: 10,),
-          // ListView.builder(
-          //   scrollDirection: Axis.horizontal,
-          //   // itemCount: categoriesData.length,
-          //   itemBuilder: (context, i){
-          //     return Categorie(
-          //       imageLink: '',
-          //       categorieName: '',
-          //     );
-          //   }
-          // )
-          // SingleChildScrollView(
-          //   scrollDirection: Axis.horizontal,
-          //   child: Row(
-          //     children: [
-          //       Categorie(
-          //         imageLink: 'assets/human_organ_icon/heart.png',
-          //         categorieName: 'Coeur'
-          //       ),
-          //       SizedBox(width: 10),
-          //       Categorie(
-          //         imageLink: 'assets/human_organ_icon/brain.png',
-          //         categorieName: 'Cerveau'
-          //       ),
-          //       SizedBox(width: 10),
-          //       Categorie(
-          //         imageLink: 'assets/human_organ_icon/kidney.png',
-          //         categorieName: 'Rein',
-          //       ),
-          //       SizedBox(width: 10),
-          //       Categorie(
-          //         imageLink: 'assets/human_organ_icon/skin.png',
-          //         categorieName: 'Peau',
-          //       )
-          //     ],
-          //   ),
-          // )
+          Expanded(
+            child: ListView.builder(
+            // shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: categorieJsonData == null? 0 : categorieJsonData.length,
+            itemBuilder: (context, i){
+              return Categorie(
+                  imageLink: categorieJsonData[i]['image'],
+                  categorieName: categorieJsonData[i]['organ']
+                );
+            }
+              ),
+          )
         ],
       ),
     );

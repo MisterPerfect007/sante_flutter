@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sante_app/screens/home.dart';
+import 'package:sante_app/screens/search/search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const Home(),
+      home: const Search(),
     );
   }
 }

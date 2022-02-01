@@ -24,9 +24,11 @@ class Categorie extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-          cc.setCategorie(categorieName)
+          cc.setCategorie(categorieName),
+          // cc.updateTopDoctor()
       },
       child: Obx( () => Container(
+        margin: EdgeInsets.only(right: 10),
         height: 120,
         width: 100,
         decoration: BoxDecoration(

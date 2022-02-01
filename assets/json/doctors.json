@@ -36,7 +36,7 @@
     },
     {
         "id": "6",
-        "name": "Albert Koné",
+        "name": "Samira Koné",
         "specialist": "Ophtalmologue",
         "organ": "Yeux",
         "id_photo": "assets/doctors/doctor6.jpeg"
@@ -56,15 +56,15 @@
         "id_photo": "assets/doctors/doctor8.jpeg"
     },
     {
-        "id": "8",
-        "name": "Virigine Kan Yapi",
+        "id": "14",
+        "name": "Amélie Kouassi Konan",
         "specialist": "Cardiologue",
         "organ": "Coeur",
-        "id_photo": "assets/doctors/doctor8.jpeg"
+        "id_photo": "assets/doctors/doctor14.jpeg"
     },
     {
         "id": "9",
-        "name": "Bernard Dosso",
+        "name": "Vatogba Dosso",
         "specialist": "Pneumologue",
         "organ": "Poumons",
         "id_photo": "assets/doctors/doctor9.jpeg"
@@ -75,5 +75,5 @@
         "specialist": "Dermatologue",
         "organ": "Peau",
         "id_photo": "assets/doctors/doctor10.jpeg"
-    }
+    } 
 ]

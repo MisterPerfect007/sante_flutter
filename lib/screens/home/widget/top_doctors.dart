@@ -1,8 +1,35 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sante_app/controllers/categories_controller.dart';
 
+import 'doctor.dart';
 
-class TopDoctors extends StatelessWidget {
-  const TopDoctors({ Key? key }) : super(key: key);
+class TopDoctors extends StatefulWidget {
+  const TopDoctors({Key? key}) : super(key: key);
+
+  @override
+  State<TopDoctors> createState() => _TopDoctorsState();
+}
+
+class _TopDoctorsState extends State<TopDoctors> {
+  final CategoriesController cc = Get.put(CategoriesController());
+
+  dynamic doctorsJsonData;
+  loadJson() async {
+    String data = await DefaultAssetBundle.of(context)
+        .loadString("assets/json/doctors.json");
+    List<dynamic> list = jsonDecode(data);
+    // print(list);
+    cc.setAllDoctorsList(list);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadJson();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,83 +40,22 @@ class TopDoctors extends StatelessWidget {
         children: [
           const Text(
             'Top Docteurs',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w700
-              ),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Doctor(),
-                  SizedBox(height: 15,),
-                  Doctor(),
-                  SizedBox(height: 15,),
-                  Doctor(),
-                  SizedBox(height: 15,),
-                  Doctor(),
-                ],
-              ),
-            ),
+            child: Obx( () => ListView.builder(
+                itemCount: cc.doctorsList.length,
+                itemBuilder: (context, i) {
+                  return Doctor(
+                      image: cc.doctorsList[i]["id_photo"],
+                      specialiste: cc.doctorsList[i]["specialist"],
+                      nom: cc.doctorsList[i]["name"]);
+                })),
           )
         ],
-      ),
-    );
-  }
-}
-
-class Doctor extends StatelessWidget {
-  const Doctor({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 15, top: 10, bottom: 10),
-      decoration: BoxDecoration(
-        color: Color(0xfff4f6fa),
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      width: MediaQuery.of(context).size.width,
-      child: Row(
-        children: [
-          Container(
-            height: 70,
-            width: 70,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage('assets/doctors/doctor1.jpeg')
-              )
-            ),
-          ),
-          SizedBox(width: 10,),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Cardiologue',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey[700]
-                ),
-              ),
-              SizedBox(height: 10,),
-              Text(
-                'Dr. ' + 'Hélaine Koffi',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700
-                ),
-              )
-            ]
-          )
-
-        ]
       ),
     );
   }
