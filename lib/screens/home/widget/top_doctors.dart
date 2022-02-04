@@ -50,6 +50,7 @@ class _TopDoctorsState extends State<TopDoctors> {
                 itemCount: cc.doctorsList.length,
                 itemBuilder: (context, i) {
                   return Doctor(
+                      id: cc.doctorsList[i]["id"],
                       image: cc.doctorsList[i]["id_photo"],
                       specialiste: cc.doctorsList[i]["specialist"],
                       nom: cc.doctorsList[i]["name"]);

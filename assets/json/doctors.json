@@ -4,76 +4,97 @@
         "name": "Hélaine Koffi",
         "specialist": "Cardiologue",
         "organ": "Coeur",
-        "id_photo": "assets/doctors/doctor1.jpeg"
+        "id_photo": "assets/doctors/doctor1.jpeg",
+        "desc": "Dr. Hélaine Koffi est une cardiologue diplômé de l'université Nangui Abroguoa. \nL'une  des meilleurs cardiologues de sa génération, elle est actuellement en service au CHU d'Angré."
     },
     {
         "id": "2",
         "name": "Hervé Tanoh",
         "specialist": "Neurologue",
         "organ": "Cerveau",
-        "id_photo": "assets/doctors/doctor2.jpeg"
+        "id_photo": "assets/doctors/doctor2.jpeg",
+        "desc": "Dr. Hervé Tanoh est un neurologue diplômé de l'université de Cocody. \nL'un  des meilleurs neurologues de sa génération, il est actuellement en service au CHU de Yopougon."
+
     },
     {
         "id": "3",
         "name": "Jules Tra Bi",
         "specialist": "Dermatologue",
         "organ": "Peau",
-        "id_photo": "assets/doctors/doctor3.jpeg"
+        "id_photo": "assets/doctors/doctor3.jpeg",
+        "desc": "Dr. Jules Tra Bi est un Dermatologue diplômé de l'université de Cocody. \nL'un  des meilleurs Dermatologues de sa génération, il est actuellement en service au CHU de Yopougon."
+        
     },
     {
         "id": "4",
         "name": "Agnès Gonzalez",
         "specialist": "Néphrologue",
         "organ": "Rein",
-        "id_photo": "assets/doctors/doctor4.jpeg"
+        "id_photo": "assets/doctors/doctor4.jpeg",
+        "desc": "Dr. Agnès Gonzalez est une Néphrologue diplômé de l'université Nangui Abroguoa. \nL'une  des meilleurs Néphrologue de sa génération, elle est actuellement en service au CHU d'Angré."
+
     },
     {
         "id": "5",
         "name": "Stéphanie Ouattara",
         "specialist": "Ophtalmologue",
         "organ": "Yeux",
-        "id_photo": "assets/doctors/doctor5.jpeg"
+        "id_photo": "assets/doctors/doctor5.jpeg",
+        "desc": "Dr. Stéphanie Ouattara est une Ophtalmologue diplômé de l'université Nangui Abroguoa. \nL'une  des meilleurs Ophtalmologue de sa génération, elle est actuellement en service au CHU d'Angré."
+
     },
     {
         "id": "6",
         "name": "Samira Koné",
         "specialist": "Ophtalmologue",
         "organ": "Yeux",
-        "id_photo": "assets/doctors/doctor6.jpeg"
+        "id_photo": "assets/doctors/doctor6.jpeg",
+        "desc": "Dr. Samira Koné est une Ophtalmologue diplômé de l'université de Bouaké. \nL'une  des meilleurs Ophtalmologue de sa génération, elle est actuellement en service au CHU de Bouaké."
+
     },
     {
         "id": "7",
         "name": "Adéline Konan",
         "specialist": "Neurologue",
         "organ": "Cerveau",
-        "id_photo": "assets/doctors/doctor7.jpeg"
+        "id_photo": "assets/doctors/doctor7.jpeg",
+        "desc": "Dr. Adéline Konan est une Neurologue diplômé de l'université de Bouaké. \nL'une  des meilleurs Neurologues de sa génération, elle est actuellement en service au CHU de Cocody."
+
     },
     {
         "id": "8",
         "name": "Virigine Kan Yapi",
         "specialist": "Cardiologue",
         "organ": "Coeur",
-        "id_photo": "assets/doctors/doctor8.jpeg"
+        "id_photo": "assets/doctors/doctor8.jpeg",
+        "desc": "Dr. Virigine Kan Yapi est une Cardiologue diplômé de l'université de Bouaké. \nL'une  des meilleurs Cardiologues de sa génération, elle est actuellement en service au CHU de Cocody."
+
     },
     {
         "id": "14",
         "name": "Amélie Kouassi Konan",
         "specialist": "Cardiologue",
         "organ": "Coeur",
-        "id_photo": "assets/doctors/doctor14.jpeg"
+        "id_photo": "assets/doctors/doctor14.jpeg",
+        "desc": "Dr. Amélie Kouassi Konan est une Cardiologue diplômé de l'université de Paris. \nL'une  des meilleurs Cardiologues de sa génération, elle est actuellement en service au CHU d'Angré."
+
     },
     {
         "id": "9",
         "name": "Vatogba Dosso",
         "specialist": "Pneumologue",
         "organ": "Poumons",
-        "id_photo": "assets/doctors/doctor9.jpeg"
+        "id_photo": "assets/doctors/doctor9.jpeg",
+        "desc": "Dr. Vatogba Dosso est un Pneumologue diplômé de l'université de Harvard au Etats Unis. \nL'un  des meilleurs Pneumologues de sa génération, elle est actuellement en service au CHU d'Angré."
+
     },
     {
         "id": "10",
         "name": "Murielle Tagbo",
         "specialist": "Dermatologue",
         "organ": "Peau",
-        "id_photo": "assets/doctors/doctor10.jpeg"
-    } 
+        "id_photo": "assets/doctors/doctor10.jpeg",
+        "desc": "Dr. Murielle Tagbo est une Dermatologue diplômé de l'université de Harvard au Etats Unis. \nL'une  des meilleurs Dermatologues de sa génération, elle est actuellement en service au CHU d'Angré."
+        
+    }
 ]

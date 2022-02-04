@@ -10,12 +10,14 @@ class Doctor extends StatelessWidget {
   final String image;
   final String specialiste;
   final String nom;
+  final String id;
   bool searching;
   Doctor({
     Key? key,
     required this.image,
     required this.specialiste,
     required this.nom,
+    required this.id,
     this.searching = false
   }) : super(key: key);
 
@@ -32,7 +34,7 @@ class Doctor extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context, 
-          MaterialPageRoute(builder: (context) => AboutDoctor())
+          MaterialPageRoute(builder: (context) => AboutDoctor(id: id,))
           );
       },
       child: Container(

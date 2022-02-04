@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sante_app/controllers/categories_controller.dart';
 
 class AboutDoctor extends StatelessWidget {
-  const AboutDoctor({Key? key}) : super(key: key);
+  final String id;
+  AboutDoctor({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
+  final CategoriesController cc = Get.put(CategoriesController());
+
+  retrieveDoctor() {
+    return cc.allDoctorsList.firstWhere((element) => element["id"] == id);
+    // print(doctor);
+  }
 
   @override
   Widget build(BuildContext context) {
+    Map doctor = retrieveDoctor();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size(MediaQuery.of(context).size.width, 50),
         child: Container(
           // color: Colors.teal,
-          padding: EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           child: SafeArea(
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.center,
@@ -46,13 +60,13 @@ class AboutDoctor extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: AssetImage('assets/doctors/doctor6.jpeg'))),
+                      image: AssetImage(doctor["id_photo"]))),
             ),
             SizedBox(
               height: 30,
             ),
             Text(
-              'Cardiologue',
+              doctor["specialist"],
               style: TextStyle(
                 fontSize: 25,
               ),
@@ -60,10 +74,13 @@ class AboutDoctor extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-            
             Text(
-              'Dr. Hélaine Koffi',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
+              'Dr. ${doctor["name"]}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w700,
+              ),
             ),
             SizedBox(
               height: 30,
@@ -82,7 +99,7 @@ class AboutDoctor extends StatelessWidget {
                     color: Colors.blue.shade300,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 Container(
@@ -98,7 +115,9 @@ class AboutDoctor extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 15,),
+            const SizedBox(
+              height: 15,
+            ),
             Container(
               alignment: Alignment.topLeft,
               child: Column(
@@ -113,7 +132,7 @@ class AboutDoctor extends StatelessWidget {
                     height: 15,
                   ),
                   Text(
-                    "Dr. Hélaine Koffi est une Cardiologue diplomé de l'université Nangui Abrogoua d'Abidjan.",
+                    doctor["desc"] ?? "Dr. Hélaine Koffi est une Cardiologue diplomé de l'université Nangui Abrogoua d'Abidjan.",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 20,
@@ -123,13 +142,13 @@ class AboutDoctor extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Container(
               padding: const EdgeInsets.only(
                   top: 15, bottom: 15, left: 25, right: 25),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Color(0xff137fff),
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Text(

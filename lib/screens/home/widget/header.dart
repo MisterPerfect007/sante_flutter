@@ -11,7 +11,7 @@ class Header extends StatelessWidget {
       child: Row(
         children:  [
           const Text(
-            'Hello, Dr',
+            'Hallo, Dr',
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.w600,

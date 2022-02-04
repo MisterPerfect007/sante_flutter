@@ -25,8 +25,8 @@ class _SearchState extends State<Search> {
 
   @override
   void initState(){
-    searchResult = cc.allDoctorsList;
     super.initState();
+    searchResult = cc.allDoctorsList;
   }
 
   @override
@@ -89,6 +89,7 @@ class _SearchState extends State<Search> {
           itemCount: searchResult.length,
           itemBuilder: (context, i) {
             return Doctor(
+              id: searchResult[i]["id"],
               image: searchResult[i]["id_photo"], 
               specialiste: searchResult[i]["specialist"], 
               nom: searchResult[i]["name"],
