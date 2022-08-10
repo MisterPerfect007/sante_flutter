@@ -32,57 +32,9 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(MediaQuery.of(context).size.width, 50),
-        child: SafeArea(
-          child: Container(
-            margin: const EdgeInsets.only(left: 15),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back_rounded)
-                ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10, right: 20),
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    decoration: const BoxDecoration(
-                      color: Color(0xfff4f6fa),
-                      borderRadius: BorderRadius.all(Radius.circular(50))
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        
-                        Expanded(child: TextField(
-                          onChanged: (value) {
-                            if(value.isNotEmpty){
-                              updateSearchResult(value);
-                            }else {
-                              setState(() {
-                                searchResult = cc.allDoctorsList;
-                              });
-                            }
-                          },
-                          autofocus: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Recherche, ex: Koffi',
-                            icon: Icon(Icons.search),
-                            border: InputBorder.none
-                          ),
-                        )),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      appBar: buildAppBar(context),
       body: Container(
-        margin: EdgeInsets.only(top: 15, bottom: 15),
+        margin: const EdgeInsets.only(top: 15, bottom: 15),
         padding: const EdgeInsets.only(left: 15, right: 15),
         alignment: Alignment.center,
         child: ListView.builder(
@@ -96,6 +48,58 @@ class _SearchState extends State<Search> {
               searching: true,
             );
           }
+        ),
+      ),
+    );
+  }
+
+  PreferredSize buildAppBar(BuildContext context) {
+    return PreferredSize(
+      preferredSize: Size(MediaQuery.of(context).size.width, 60),
+      child: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.only(left: 15, top: 10),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: const Icon(Icons.arrow_back_rounded)
+              ),
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(left: 10, right: 20),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  decoration: const BoxDecoration(
+                    color: Color(0xfff4f6fa),
+                    borderRadius: BorderRadius.all(Radius.circular(50))
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      
+                      Expanded(child: TextField(
+                        onChanged: (value) {
+                          if(value.isNotEmpty){
+                            updateSearchResult(value);
+                          }else {
+                            setState(() {
+                              searchResult = cc.allDoctorsList;
+                            });
+                          }
+                        },
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Recherche, ex: Koffi',
+                          icon: Icon(Icons.search),
+                          border: InputBorder.none
+                        ),
+                      )),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

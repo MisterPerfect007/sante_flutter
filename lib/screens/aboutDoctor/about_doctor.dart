@@ -132,7 +132,7 @@ class AboutDoctor extends StatelessWidget {
                     height: 15,
                   ),
                   Text(
-                    doctor["desc"] ?? "Dr. Hélaine Koffi est une Cardiologue diplomé de l'université Nangui Abrogoua d'Abidjan.",
+                    doctor["desc"],
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         fontSize: 20,
