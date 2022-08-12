@@ -38,8 +38,8 @@ class Doctor extends StatelessWidget {
           );
       },
       child: Container(
-        padding: EdgeInsets.only(left: 15, top: 10, bottom: 10),
-        margin: EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(left: 15, top: 10, bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
           color: isFiltered() ? Color(0xfffff6c8) : Color(0xfff4f6fa),
           // color: Color(0xfff4f6fa),
@@ -72,7 +72,7 @@ class Doctor extends StatelessWidget {
                 ),
                 const SizedBox(height: 10,),
                 Text(
-                  'Dr.  ${nom}',
+                  'Dr.  $nom',
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700

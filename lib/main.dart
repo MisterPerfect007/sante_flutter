@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sante_app/pub.dev/caroussel.dart';
-import 'package:sante_app/pub.dev/splash_screen.dart';
-import 'package:sante_app/screens/home.dart';
-import 'package:sante_app/screens/search/search.dart';
+import 'package:sante_app/features/login/screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +18,7 @@ class MyApp extends StatelessWidget {
         // fontFamily: 'Comforter',
         primarySwatch: Colors.blue,
       ),
-      home: const Home(),
+      home: const LoginScreen(),
     );
   }
 }
