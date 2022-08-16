@@ -1,38 +1,24 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+import '../../core/custom form field/custom_password_form_field.dart';
+import '../../core/custom form field/custom_text_form_field.dart';
+import '../../core/custom form field/login_app_bar.dart';
+
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController passwordConfirmationController =
+        TextEditingController();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              "Bienvenue sur ",
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w400,
-                color: Colors.black87,
-              ),
-            ),
-            Text(
-              "DOCTOR+",
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff137fff),
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: buildLoginSignupAppBar(),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -43,107 +29,83 @@ class LoginScreen extends StatelessWidget {
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   const SizedBox(height: 30),
                   Form(
+                    key: formKey,
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        const CustomTextFormField(labelText: 'Email'),
-                        const CustomPasswordFormField(
-                            labelText: 'Password', visibility: true),
-                        const CustomPasswordFormField(
-                            labelText: 'Password confirmation',
-                            visibility: false),
+                        const Text(
+                          "CONNEXION",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        //Email
+                        CustomTextFormField(
+                          controller: emailController,
+                          labelText: 'Email',
+                          validator: (value) =>
+                              EmailValidator.validate(value ?? '')
+                                  ? null
+                                  : "Please enter a valid email",
+                        ),
+                        CustomPasswordFormField(
+                          controller: passwordController,
+                          labelText: 'Password',
+                          visibility: true,
+                          validator: (value) =>
+                              (value!.length < 5) ? 'Password to short' : null,
+                        ),
+                        CustomPasswordFormField(
+                          controller: passwordConfirmationController,
+                          labelText: 'Password confirmation',
+                          visibility: false,
+                          validator: (value) =>
+                              (passwordConfirmationController.text ==
+                                      passwordController.text)
+                                  ? null
+                                  : 'Passwords are different',
+                        ),
                         const SizedBox(height: 40),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (formKey.currentState?.validate() ?? false) {
+                              // formKey.currentState?.save();
+                              print(
+                                  "Email: ${emailController.text}, PassWord: ${passwordController.text}");
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xff137fff),
                             minimumSize: const Size(double.infinity, 50),
                           ),
                           child: const Text(
-                            'Créer un Compte',
+                            'Se connecter',
                             style: TextStyle(),
                           ),
                         ),
-                        
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text("Je n'ai pas de compte, "),
+                            Text("créer un compte",
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.w500))
+                          ],
+                        )
                       ],
                     ),
-                  ),
+                  )
                 ]),
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomPasswordFormField extends StatefulWidget {
-  final bool visibility;
-  final String labelText;
-
-  const CustomPasswordFormField({
-    Key? key,
-    required this.labelText,
-    required this.visibility,
-  }) : super(key: key);
-
-  @override
-  State<CustomPasswordFormField> createState() =>
-      _CustomPasswordFormFieldState();
-}
-
-class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
-  IconData _icon = Icons.visibility;
-  bool _isHidden = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: _isHidden,
-      style: const TextStyle(
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-        // border: InputBorder.none,
-        suffixIcon: widget.visibility
-            ? GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _icon = _icon == Icons.visibility_off
-                        ? Icons.visibility
-                        : Icons.visibility_off;
-                    _isHidden = !_isHidden;
-                  });
-                },
-                child: Icon(_icon))
-            : null,
-      ),
-      validator: (value) {},
-    );
-  }
-}
-
-class CustomTextFormField extends StatelessWidget {
-  final String labelText;
-
-  const CustomTextFormField({
-    Key? key,
-    required this.labelText,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      style: const TextStyle(
-        fontSize: 16,
-      ),
-      decoration: InputDecoration(
-        labelText: labelText,
-        // border: InputBorder.none,
-      ),
-      validator: (value) {},
     );
   }
 }
