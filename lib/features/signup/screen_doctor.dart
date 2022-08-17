@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sante_app/core/image%20picker/image_picker.dart';
 
+import '../../controllers/categories_controller.dart';
 import '../../core/custom form field/custom_password_form_field.dart';
 import '../../core/custom form field/custom_text_form_field.dart';
 import '../../core/custom form field/login_app_bar.dart';
@@ -10,11 +15,8 @@ class SignupDoctor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController passwordConfirmationController =
-        TextEditingController();
-    final formKey = GlobalKey<FormState>();
+    // final CategoriesController cc = Get.put(CategoriesController());
+    // String userImage = cc.signupPhotoDoctor.toString();
 
     return Scaffold(
       appBar: buildLoginSignupAppBar(),
@@ -25,11 +27,13 @@ class SignupDoctor extends StatelessWidget {
               // height: size.height,
               padding: const EdgeInsets.all(20),
               child: Center(
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const SizedBox(height: 30),
-                  buildForm(formKey, emailController, passwordController,
-                      passwordConfirmationController),
-                ]),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    SizedBox(height: 30),
+                    FormContainer(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -37,13 +41,28 @@ class SignupDoctor extends StatelessWidget {
       ),
     );
   }
+}
 
-  Form buildForm(
-    GlobalKey<FormState> formKey,
-    TextEditingController emailController,
-    TextEditingController passwordController,
-    TextEditingController passwordConfirmationController,
-  ) {
+class FormContainer extends StatelessWidget {
+  const FormContainer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController numberController = TextEditingController();
+    final TextEditingController specialistController = TextEditingController();
+    final TextEditingController aboutController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController passwordConfirmationController =
+        TextEditingController();
+
+    final formKey = GlobalKey<FormState>();
+
+    final CategoriesController cc = Get.put(CategoriesController());
     return Form(
       key: formKey,
       child: Column(
@@ -67,20 +86,41 @@ class SignupDoctor extends StatelessWidget {
             ],
           ),
           //
-          Stack(children: const [
-             CircleAvatar(
-              radius: 55,
-              child: Text("data"),
-            ),
-            Positioned(
-              bottom: 5,
-              right: 5,
-              child: Icon(
-                Icons.camera_alt,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ImagePicking()));
+            },
+            child: Stack(children: [
+              Obx(() => CircleAvatar(
+                    radius: 55,
+                    child: cc.signupPhotoDoctor.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(200)),
+                            child: Image.file(
+                              File(cc.signupPhotoDoctor.toString()),
+                            ),
+                          )
+                        : const Text("Photo"),
+                  )),
+              const Positioned(
+                bottom: 5,
+                right: 5,
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.blue
+                ),
               ),
-            ),
-          ]),
-
+            ]),
+          ),
+          CustomTextFormField(
+            controller: nameController,
+            labelText: 'Name',
+            validator: (value) => value != null && value.isNotEmpty
+                ? null
+                : "Please enter your name",
+          ),
           //Email
           CustomTextFormField(
             controller: emailController,
@@ -91,29 +131,29 @@ class SignupDoctor extends StatelessWidget {
           ),
           //Number
           CustomTextFormField(
-            controller: emailController,
+            controller: numberController,
             labelText: 'Number',
-            validator: (value) => EmailValidator.validate(value ?? '')
+            validator: (value) => value != null && RegExp(r'(^(?:[+0]9)?[0-9]{8,12}$)').hasMatch(value)
                 ? null
-                : "Please enter a valid email",
+                : "Please enter valid number",
           ),
-          //
+          //! change to dropdown list
           CustomTextFormField(
-            controller: emailController,
+            controller: specialistController,
             labelText: 'Specialist',
-            validator: (value) => EmailValidator.validate(value ?? '')
+            validator: (value) => value != null && value.isNotEmpty
                 ? null
-                : "Please enter a valid email",
+                : "Please enter a specialist",
           ),
           //
           CustomTextFormField(
-            controller: emailController,
+            controller: aboutController,
             maxLength: 500,
             maxLines: 2,
-            labelText: 'A propos',
-            validator: (value) => EmailValidator.validate(value ?? '')
+            labelText: 'About you',
+            validator: (value) => value != null && value.isNotEmpty
                 ? null
-                : "Please enter a valid email",
+                : "Please enter your description",
           ),
           //
 
@@ -138,8 +178,13 @@ class SignupDoctor extends StatelessWidget {
             onPressed: () {
               if (formKey.currentState?.validate() ?? false) {
                 // formKey.currentState?.save();
-                print(
-                    "Email: ${emailController.text}, PassWord: ${passwordController.text}");
+                print("Name: ${nameController.text},");
+                print("Email: ${emailController.text},");
+                print("Number: ${numberController.text},");
+                print("Specialite: ${specialistController.text},");
+                print("About: ${aboutController.text},");
+                print("PassWord: ${passwordController.text}");
+                // """);
               }
             },
             style: ElevatedButton.styleFrom(

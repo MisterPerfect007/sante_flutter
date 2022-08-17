@@ -10,11 +10,7 @@ class SignupPatient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController passwordConfirmationController =
-        TextEditingController();
-    final formKey = GlobalKey<FormState>();
+    
 
     return Scaffold(
       appBar: buildLoginSignupAppBar(),
@@ -25,10 +21,9 @@ class SignupPatient extends StatelessWidget {
               // height: size.height,
               padding: const EdgeInsets.all(20),
               child: Center(
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const SizedBox(height: 30),
-                  buildForm(formKey, emailController, passwordController,
-                      passwordConfirmationController),
+                child: Column(mainAxisSize: MainAxisSize.min, children: const [
+                  SizedBox(height: 30),
+                  _FormContainer(),
                 ]),
               ),
             ),
@@ -37,15 +32,24 @@ class SignupPatient extends StatelessWidget {
       ),
     );
   }
+}
 
- 
+class _FormContainer extends StatelessWidget {
+  const _FormContainer({
+    Key? key,
+  }) : super(key: key);
 
-  Form buildForm(
-    GlobalKey<FormState> formKey,
-    TextEditingController emailController,
-    TextEditingController passwordController,
-    TextEditingController passwordConfirmationController,
-  ) {
+
+  @override
+  Widget build(BuildContext context) {
+
+    final TextEditingController nameController = TextEditingController();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController passwordConfirmationController =
+        TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
     return Form(
       key: formKey,
       child: Column(
@@ -67,6 +71,13 @@ class SignupPatient extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          CustomTextFormField(
+            controller: nameController,
+            labelText: 'Name',
+            validator: (value) => value != null && value.isNotEmpty
+                ? null
+                : "Please enter your name",
           ),
           //Email
           CustomTextFormField(
@@ -97,8 +108,8 @@ class SignupPatient extends StatelessWidget {
             onPressed: () {
               if (formKey.currentState?.validate() ?? false) {
                 // formKey.currentState?.save();
-                print(
-                    "Email: ${emailController.text}, PassWord: ${passwordController.text}");
+                print("Email: ${emailController.text}, PassWord: ${passwordController.text}");
+                print("name: ${nameController.text}");
               }
             },
             style: ElevatedButton.styleFrom(

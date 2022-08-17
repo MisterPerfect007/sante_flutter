@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../controllers/categories_controller.dart';
 
 class ImagePicking extends StatefulWidget {
   ImagePicking({Key? key}) : super(key: key);
@@ -12,6 +15,7 @@ class ImagePicking extends StatefulWidget {
 
 class _ImagePickingState extends State<ImagePicking> {
   String? currentImage;
+  final CategoriesController cc = Get.put(CategoriesController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class _ImagePickingState extends State<ImagePicking> {
       if (image == null) return;
       // File()
       setState(() {
-        this.currentImage = image.path;
+        currentImage = image.path;
       });
     }
 
@@ -30,20 +34,15 @@ class _ImagePickingState extends State<ImagePicking> {
         preferredSize: Size(MediaQuery.of(context).size.width, 80),
         child: SafeArea(
           child: Container(
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
+            padding: const EdgeInsets.all(15),
+            decoration: const BoxDecoration(color: Colors.white),
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Icon(
-                    Icons.arrow_left,
-                    size: 30,
-                  ),
+                  child: const Icon(Icons.arrow_left, size: 30),
                 )
               ],
             ),
@@ -58,7 +57,8 @@ class _ImagePickingState extends State<ImagePicking> {
             currentImage != null
                 ? Column(children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(200)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(200)),
                       child: Image.file(
                         File(currentImage!),
                         width: 200,
@@ -66,9 +66,7 @@ class _ImagePickingState extends State<ImagePicking> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(
-                      height: 50,
-                    )
+                    const SizedBox(height: 50)
                   ])
                 : Text(''),
             currentImage != null
@@ -77,6 +75,7 @@ class _ImagePickingState extends State<ImagePicking> {
                     // color: Colors.green,
                     child: ElevatedButton(
                         onPressed: () {
+                          cc.setSignupPhotoDoctor(currentImage);
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(primary: Colors.green),
@@ -91,17 +90,15 @@ class _ImagePickingState extends State<ImagePicking> {
                       onPressed: () => pickImage(ImageSource.gallery),
                       child: Row(
                         children: [
-                          Icon(Icons.photo),
-                          SizedBox(
-                            width: 10,
-                          ),
+                          const Icon(Icons.photo),
+                          const SizedBox(width: 10),
                           Text(currentImage != null
                               ? 'Choisir une autre'
                               : 'Choisir une photo')
                         ],
                       )),
                   ElevatedButton(
-                      onPressed: (){ 
+                      onPressed: () {
                         print("object");
                         pickImage(ImageSource.camera);
                       },

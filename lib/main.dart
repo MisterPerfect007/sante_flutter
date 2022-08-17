@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Dongle',
         primarySwatch: Colors.blue,
       ),
-      home: SignupDoctor(),
+      home: const SignupPatient(),
     );
   }
 }
