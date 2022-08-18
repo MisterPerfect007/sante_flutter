@@ -140,15 +140,18 @@ class AboutDoctor extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 15, bottom: 15, left: 25, right: 25),
-                decoration: const BoxDecoration(
-                    color: Color(0xff137fff),
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                child: Text(
-                  'Prendre un Rendez-vous',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+              GestureDetector(
+                // onTap: () => ,
+                child: Container(
+                  padding: const EdgeInsets.only(
+                      top: 15, bottom: 15, left: 25, right: 25),
+                  decoration: const BoxDecoration(
+                      color: Color(0xff137fff),
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  child: const Text(
+                    'Prendre un Rendez-vous',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                 ),
               )
             ],

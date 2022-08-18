@@ -41,6 +41,7 @@ dependencies:
   # carousel_pro: ^1.0.0
   email_validator: '^2.1.16'
   image_picker: ^0.8.5+3
+  syncfusion_flutter_datepicker: ^20.2.44
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +79,10 @@ flutter:
     - family : Dongle
       fonts :
         - asset : fonts/Dongle-Regular.ttf
+          weight : 500
+    - family : Inter
+      fonts :
+        - asset : fonts/Inter-Regular.ttf
           weight : 500
 
   # To add assets to your application, add an assets section, like this:

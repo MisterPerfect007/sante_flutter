@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sante_app/features/signup/screen_doctor.dart';
+import 'package:sante_app/screens/appointment/appointment.dart';
 import 'package:sante_app/screens/home.dart';
 import 'package:sante_app/screens/home/widget/top_doctors.dart';
 
 import 'core/image picker/image_picker.dart';
 import 'features/login/screen.dart';
 import 'features/signup/screen_patient.dart';
+import 'screens/doctor/doctor.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,10 +23,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Dongle',
+        fontFamily: 'Inter',
         primarySwatch: Colors.blue,
       ),
-      home: const SignupPatient(),
+      home: Appointment(),
     );
   }
 }
