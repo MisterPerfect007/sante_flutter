@@ -1,24 +1,42 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:sante_app/core/navigator/navigator.dart';
 
 import '../../core/custom form field/custom_password_form_field.dart';
 import '../../core/custom form field/custom_text_form_field.dart';
 import '../../core/custom form field/login_app_bar.dart';
+import '../signup/switching_screen.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final TextEditingController passwordConfirmationController =
-        TextEditingController();
+    // final TextEditingController passwordConfirmationController =
+    //     TextEditingController();
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: buildLoginSignupAppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 1,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              "DOCTOR+",
+              style: TextStyle(
+                fontSize: 40,
+                fontFamily: 'Dongle',
+                fontWeight: FontWeight.w600,
+                color: Color(0xff137fff),
+              ),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -56,16 +74,16 @@ class Login extends StatelessWidget {
                           validator: (value) =>
                               (value!.length < 5) ? 'Password to short' : null,
                         ),
-                        CustomPasswordFormField(
-                          controller: passwordConfirmationController,
-                          labelText: 'Password confirmation',
-                          visibility: false,
-                          validator: (value) =>
-                              (passwordConfirmationController.text ==
-                                      passwordController.text)
-                                  ? null
-                                  : 'Passwords are different',
-                        ),
+                        // CustomPasswordFormField(
+                        //   controller: passwordConfirmationController,
+                        //   labelText: 'Password confirmation',
+                        //   visibility: false,
+                        //   validator: (value) =>
+                        //       (passwordConfirmationController.text ==
+                        //               passwordController.text)
+                        //           ? null
+                        //           : 'Passwords are different',
+                        // ),
                         const SizedBox(height: 40),
                         ElevatedButton(
                           onPressed: () {
@@ -89,12 +107,16 @@ class Login extends StatelessWidget {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text("Je n'ai pas de compte, "),
-                            Text("créer un compte",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.w500))
+                          children: [
+                            const Text("Je n'ai pas de compte, "),
+                            TextButton(
+                                onPressed: () {
+                                  goToPage(context, const SwitchingSignUp());
+                                },
+                                child: const Text("créer un compte",
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.w500))),
                           ],
                         )
                       ],

@@ -48,4 +48,11 @@ class CategoriesController extends GetxController {
       filteredDoctorsList.value = [];
     }
   }
+
+  // var appointmentDate = "".obs;
+
+  // setAppointmentDate(String newValue){
+  //   appointmentDate.value = newValue;
+  //   print("gsg: $appointmentDate");
+  // }
 } 

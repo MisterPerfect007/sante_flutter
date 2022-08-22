@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "801353179903",
+    "project_id": "flutter-project-sante",
+    "storage_bucket": "flutter-project-sante.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801353179903:android:7aa18299c79b6bd62462ca",
+        "android_client_info": {
+          "package_name": "com.example.sante_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801353179903-rc30lip1795ii7tlbjgc2nvf2nu14qcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUwecjwAOTmCSDOa8qNU-XclBikVUvoCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801353179903-rc30lip1795ii7tlbjgc2nvf2nu14qcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

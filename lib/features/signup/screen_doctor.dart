@@ -9,6 +9,8 @@ import '../../controllers/categories_controller.dart';
 import '../../core/custom form field/custom_password_form_field.dart';
 import '../../core/custom form field/custom_text_form_field.dart';
 import '../../core/custom form field/login_app_bar.dart';
+import '../../core/navigator/navigator.dart';
+import '../login/screen.dart';
 
 class SignupDoctor extends StatelessWidget {
   const SignupDoctor({Key? key}) : super(key: key);
@@ -19,7 +21,7 @@ class SignupDoctor extends StatelessWidget {
     // String userImage = cc.signupPhotoDoctor.toString();
 
     return Scaffold(
-      appBar: buildLoginSignupAppBar(),
+      appBar: buildLoginSignupAppBar(context),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -201,11 +203,14 @@ class FormContainer extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text("J'ai un compte, "),
-              Text("se connecter",
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.w500))
+            children:  [
+              const Text("J'ai un compte, "),
+              TextButton(
+                onPressed: () => goToPage(context, const Login()),
+                child: const Text("se connecter",
+                    style: TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.w500)),
+              )
             ],
           )
         ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sante_app/controllers/categories_controller.dart';
+import 'package:sante_app/core/navigator/navigator.dart';
+import 'package:sante_app/screens/appointment/appointment.dart';
 
 class AboutDoctor extends StatelessWidget {
   final String id;
@@ -141,7 +143,7 @@ class AboutDoctor extends StatelessWidget {
                 height: 30,
               ),
               GestureDetector(
-                // onTap: () => ,
+                onTap: () => goToPage(context, const Appointment()),
                 child: Container(
                   padding: const EdgeInsets.only(
                       top: 15, bottom: 15, left: 25, right: 25),
