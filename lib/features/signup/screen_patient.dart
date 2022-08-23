@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:sante_app/core/navigator/navigator.dart';
 import 'package:sante_app/features/login/screen.dart';
+import 'package:sante_app/services/auth/auth.dart';
+import 'package:sante_app/services/firestore/doctors_and_patients.dart';
 
 import '../../core/custom form field/custom_password_form_field.dart';
 import '../../core/custom form field/custom_text_form_field.dart';
@@ -12,8 +16,6 @@ class SignupPatient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: buildLoginSignupAppBar(context),
       body: SafeArea(
@@ -23,8 +25,8 @@ class SignupPatient extends StatelessWidget {
               // height: size.height,
               padding: const EdgeInsets.all(20),
               child: Center(
-                child: Column(mainAxisSize: MainAxisSize.min, children: const [
-                  SizedBox(height: 30),
+                child: Column(mainAxisSize: MainAxisSize.min, children:  [
+                  const SizedBox(height: 30),
                   _FormContainer(),
                 ]),
               ),
@@ -37,13 +39,9 @@ class SignupPatient extends StatelessWidget {
 }
 
 class _FormContainer extends StatelessWidget {
-  const _FormContainer({
+  _FormContainer({
     Key? key,
   }) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
 
     final TextEditingController nameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
@@ -51,6 +49,10 @@ class _FormContainer extends StatelessWidget {
     final TextEditingController passwordConfirmationController =
         TextEditingController();
     final formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    final auth = Auth(FirebaseAuth.instance);
 
     return Form(
       key: formKey,
@@ -107,11 +109,15 @@ class _FormContainer extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (formKey.currentState?.validate() ?? false) {
                 // formKey.currentState?.save();
-                print("Email: ${emailController.text}, PassWord: ${passwordController.text}");
-                print("name: ${nameController.text}");
+                final userCredentialOrErrorMessage = await auth.signUp(
+                    email: emailController.text.trim(),
+                    password: passwordController.text);
+                userCredentialOrErrorMessage.fold(
+                    (userCredential) => setUserDataToFireStore(userCredential), 
+                    (r) => print("@@@@@@@@@@@@@@@@@"));
               }
             },
             style: ElevatedButton.styleFrom(
@@ -141,5 +147,18 @@ class _FormContainer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void setUserDataToFireStore(UserCredential userCredential) {
+    Store(FirebaseFirestore.instance)
+        .store
+        .doc(userCredential.user?.uid)
+        .set({
+          "About": "",
+          "Name": nameController.text.trim(),
+          "Number": "",
+          "Speciality": "",
+        });
+    
   }
 }

@@ -1,10 +1,12 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sante_app/core/navigator/navigator.dart';
 
 import '../../core/custom form field/custom_password_form_field.dart';
 import '../../core/custom form field/custom_text_form_field.dart';
 import '../../core/custom form field/login_app_bar.dart';
+import '../../services/auth/auth.dart';
 import '../signup/switching_screen.dart';
 
 class Login extends StatelessWidget {
@@ -12,6 +14,8 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth = Auth(FirebaseAuth.instance);
+    
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     // final TextEditingController passwordConfirmationController =
@@ -89,8 +93,7 @@ class Login extends StatelessWidget {
                           onPressed: () {
                             if (formKey.currentState?.validate() ?? false) {
                               // formKey.currentState?.save();
-                              print(
-                                  "Email: ${emailController.text}, PassWord: ${passwordController.text}");
+                                  auth.signIn(email: emailController.text.trim(), password: passwordController.text);
                             }
                           },
                           style: ElevatedButton.styleFrom(
