@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sante_app/core/navigator/navigator.dart';
 import 'package:sante_app/features/login/screen.dart';
 import 'package:sante_app/services/auth/auth.dart';
@@ -25,7 +26,7 @@ class SignupPatient extends StatelessWidget {
               // height: size.height,
               padding: const EdgeInsets.all(20),
               child: Center(
-                child: Column(mainAxisSize: MainAxisSize.min, children:  [
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
                   const SizedBox(height: 30),
                   _FormContainer(),
                 ]),
@@ -43,12 +44,12 @@ class _FormContainer extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController passwordConfirmationController =
-        TextEditingController();
-    final formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +116,14 @@ class _FormContainer extends StatelessWidget {
                 final userCredentialOrErrorMessage = await auth.signUp(
                     email: emailController.text.trim(),
                     password: passwordController.text);
-                userCredentialOrErrorMessage.fold(
-                    (userCredential) => setUserDataToFireStore(userCredential), 
-                    (r) => print("@@@@@@@@@@@@@@@@@"));
+
+                userCredentialOrErrorMessage.fold((userCredential) {
+                  setUserDataToFireStore(userCredential);
+                  goToPage(context, const Login());
+                  Fluttertoast.showToast(msg: "Connectez-vous maintenant");
+                },
+                    (errorMessage) => Fluttertoast.showToast(
+                        msg: errorMessage ?? "Une erreur est survenue"));
               }
             },
             style: ElevatedButton.styleFrom(
@@ -150,15 +156,9 @@ class _FormContainer extends StatelessWidget {
   }
 
   void setUserDataToFireStore(UserCredential userCredential) {
-    Store(FirebaseFirestore.instance)
-        .store
-        .doc(userCredential.user?.uid)
-        .set({
-          "About": "",
-          "Name": nameController.text.trim(),
-          "Number": "",
-          "Speciality": "",
-        });
-    
+    Store(FirebaseFirestore.instance).store.doc(userCredential.user?.uid).set({
+      'Name': nameController.text.trim(),
+    });
+    Fluttertoast.showToast(msg: "Compte créer avec Succès");
   }
 }

@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
             // snapshot.connectionState
             if (snapshot.connectionState == ConnectionState.active) {
               final User? user = snapshot.data;
-              print(user);
+              // print(user);
               if (user != null) {
                 return const Home();
               } else {
