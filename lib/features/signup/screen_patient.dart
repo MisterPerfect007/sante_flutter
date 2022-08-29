@@ -158,6 +158,7 @@ class _FormContainer extends StatelessWidget {
   void setUserDataToFireStore(UserCredential userCredential) {
     Store(FirebaseFirestore.instance).store.doc(userCredential.user?.uid).set({
       'Name': nameController.text.trim(),
+      "isDoctor": false
     });
     Fluttertoast.showToast(msg: "Compte créer avec Succès");
   }
