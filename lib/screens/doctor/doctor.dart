@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../services/auth/auth.dart';
 
 class DoctorSpace extends StatefulWidget {
   const DoctorSpace({Key? key}) : super(key: key);
@@ -12,7 +15,18 @@ class _DoctorSpaceState extends State<DoctorSpace> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: buildDrawer(),
       appBar: AppBar(
+        leading: Builder(
+            builder: (context) => GestureDetector(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: const Icon(
+                Icons.menu,
+                color: Colors.black87,
+                size: 30,
+              ),
+            ),
+          ),
         elevation: 1,
         backgroundColor: Colors.white,
         title: const Text(
@@ -56,6 +70,35 @@ class _DoctorSpaceState extends State<DoctorSpace> {
                         }),
                         body: Container(child: Text("data"),))
                   ])
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+  Drawer buildDrawer() {
+    final auth = Auth(FirebaseAuth.instance);
+    return Drawer(
+      child: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.only(left: 10, top: 20),
+          color: Colors.white,
+          child: Column(
+            children: [
+              Container(
+                height: 100,
+                width: 100,
+                decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                    image: DecorationImage(
+                        image: ExactAssetImage('assets/default-avatar.png'))),
+              ),
+              const SizedBox(height: 20,),
+              const Text("test1@test.com"),
+              const SizedBox(height: 20,),
+              TextButton(onPressed: (){
+                auth.signOut;
+              }, child: const Text("Déconnection"))
             ],
           ),
         ),

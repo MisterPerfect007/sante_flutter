@@ -118,9 +118,8 @@ class _FormContainer extends StatelessWidget {
                     password: passwordController.text);
 
                 userCredentialOrErrorMessage.fold((userCredential) {
-                  setUserDataToFireStore(userCredential);
-                  goToPage(context, const Login());
-                  Fluttertoast.showToast(msg: "Connectez-vous maintenant");
+                  _setUserDataToFireStore(userCredential);
+                  goToPage(context, Login());
                 },
                     (errorMessage) => Fluttertoast.showToast(
                         msg: errorMessage ?? "Une erreur est survenue"));
@@ -143,7 +142,7 @@ class _FormContainer extends StatelessWidget {
             children: [
               const Text("J'ai un compte, "),
               TextButton(
-                onPressed: () => goToPage(context, const Login()),
+                onPressed: () => goToPage(context, Login()),
                 child: const Text("se connecter",
                     style: TextStyle(
                         color: Colors.blue, fontWeight: FontWeight.w500)),
@@ -155,10 +154,12 @@ class _FormContainer extends StatelessWidget {
     );
   }
 
-  void setUserDataToFireStore(UserCredential userCredential) {
+  void _setUserDataToFireStore(UserCredential userCredential) {
     Store(FirebaseFirestore.instance).store.doc(userCredential.user?.uid).set({
-      'Name': nameController.text.trim(),
+      'name': nameController.text.trim(),
+      'isDoctor': false,
     });
+    AuthSnackBar.signInSuccess("Compte créer avec Succès", "");
     Fluttertoast.showToast(msg: "Compte créer avec Succès");
   }
 }

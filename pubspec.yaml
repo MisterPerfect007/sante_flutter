@@ -49,6 +49,7 @@ dependencies:
   dartz: ^0.10.1
 
   fluttertoast: ^8.0.9
+  firebase_storage: ^10.3.7
 
 dev_dependencies:
   flutter_test:

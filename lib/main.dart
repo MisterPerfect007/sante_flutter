@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sante_app/features/login/utils.dart';
 import 'package:sante_app/features/signup/screen_doctor.dart';
 import 'package:sante_app/features/signup/switching_screen.dart';
 import 'package:sante_app/screens/appointment/appointment.dart';
@@ -38,14 +39,32 @@ class MyApp extends StatelessWidget {
         body: StreamBuilder<User?>(
           stream: auth.authStateChanges,
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            // snapshot.connectionState
             if (snapshot.connectionState == ConnectionState.active) {
               final User? user = snapshot.data;
-              // print(user);
               if (user != null) {
-                return const Home();
+                return FutureBuilder<bool>(
+                    future: isDoctor(user.uid),
+                    builder: (context, snapshot) {
+                      bool? isUserADoctor = snapshot.data;
+                      if (isUserADoctor != null) {
+                        return isUserADoctor
+                            ? const DoctorSpace()
+                            : const Home();
+                      }
+                      return Container(
+                        color: Colors.white,
+                        child: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    });
+                // setPageToShow() async {
+                //   return await isDoctor(user.uid) ? const DoctorSpace() : const Home();
+                // }
+                // setPageToShow();
+                // return pageToShow;
               } else {
-                return const Login();
+                return Login();
               }
             }
             return Container(

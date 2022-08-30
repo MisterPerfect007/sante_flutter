@@ -1,15 +1,20 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sante_app/core/image%20picker/image_picker.dart';
+import 'package:sante_app/features/signup/utils.dart';
+import 'package:sante_app/services/auth/auth.dart';
 
 import '../../controllers/categories_controller.dart';
 import '../../core/custom form field/custom_password_form_field.dart';
 import '../../core/custom form field/custom_text_form_field.dart';
 import '../../core/custom form field/login_app_bar.dart';
 import '../../core/navigator/navigator.dart';
+import '../../services/firestore/doctors_and_patients.dart';
 import '../login/screen.dart';
 
 class SignupDoctor extends StatelessWidget {
@@ -31,8 +36,8 @@ class SignupDoctor extends StatelessWidget {
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    SizedBox(height: 30),
+                  children: [
+                    const SizedBox(height: 30),
                     FormContainer(),
                   ],
                 ),
@@ -45,26 +50,45 @@ class SignupDoctor extends StatelessWidget {
   }
 }
 
-class FormContainer extends StatelessWidget {
-  const FormContainer({
+class FormContainer extends StatefulWidget {
+  FormContainer({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<FormContainer> createState() => _FormContainerState();
+}
+
+class _FormContainerState extends State<FormContainer> {
+  String? _selectedSpeciality;
+  List<String> specialities = [
+    "Cardiologue",
+    "Neurologue",
+    "Dermatologue",
+    "Néphrologue",
+    "Ophtalmologue",
+    "Pneumologue"
+  ];
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
+  final TextEditingController specialistController = TextEditingController();
+  final TextEditingController aboutController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+
+  final CategoriesController cc = Get.put(CategoriesController());
+
+  final auth = Auth(FirebaseAuth.instance);
+
+  String? imageUrl;
+
+  @override
   Widget build(BuildContext context) {
 
-    final TextEditingController nameController = TextEditingController();
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController numberController = TextEditingController();
-    final TextEditingController specialistController = TextEditingController();
-    final TextEditingController aboutController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController passwordConfirmationController =
-        TextEditingController();
-
-    final formKey = GlobalKey<FormState>();
-
-    final CategoriesController cc = Get.put(CategoriesController());
     return Form(
       key: formKey,
       child: Column(
@@ -109,10 +133,7 @@ class FormContainer extends StatelessWidget {
               const Positioned(
                 bottom: 5,
                 right: 5,
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.blue
-                ),
+                child: Icon(Icons.camera_alt, color: Colors.blue),
               ),
             ]),
           ),
@@ -135,18 +156,38 @@ class FormContainer extends StatelessWidget {
           CustomTextFormField(
             controller: numberController,
             labelText: 'Number',
-            validator: (value) => value != null && RegExp(r'(^(?:[+0]9)?[0-9]{8,12}$)').hasMatch(value)
+            validator: (value) => value != null &&
+                    RegExp(r'(^(?:[+0]9)?[0-9]{8,12}$)').hasMatch(value)
                 ? null
                 : "Please enter valid number",
           ),
+
           //! change to dropdown list
-          CustomTextFormField(
-            controller: specialistController,
-            labelText: 'Specialist',
-            validator: (value) => value != null && value.isNotEmpty
-                ? null
-                : "Please enter a specialist",
+          DropdownButtonFormField(
+            hint: const Text("Select a speciality"),
+            value: _selectedSpeciality,
+            items: specialities
+                .map((e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    ))
+                .toList(),
+            onChanged: (String? value) {
+              setState(() {
+                _selectedSpeciality = value;
+              });
+            },
+            validator: (value) =>
+                value != null ? null : "Please enter a speciality",
           ),
+
+          // CustomTextFormField(
+          //   controller: specialistController,
+          //   labelText: 'Specialist',
+          //   validator: (value) => value != null && value.isNotEmpty
+          //       ? null
+          //       : "Please enter a specialist",
+          // ),
           //
           CustomTextFormField(
             controller: aboutController,
@@ -177,18 +218,7 @@ class FormContainer extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           ElevatedButton(
-            onPressed: () {
-              if (formKey.currentState?.validate() ?? false) {
-                // formKey.currentState?.save();
-                print("Name: ${nameController.text},");
-                print("Email: ${emailController.text},");
-                print("Number: ${numberController.text},");
-                print("Specialite: ${specialistController.text},");
-                print("About: ${aboutController.text},");
-                print("PassWord: ${passwordController.text}");
-                // """);
-              }
-            },
+            onPressed: createAccountHandler,
             style: ElevatedButton.styleFrom(
               primary: const Color(0xff137fff),
               minimumSize: const Size(double.infinity, 50),
@@ -203,10 +233,10 @@ class FormContainer extends StatelessWidget {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children:  [
+            children: [
               const Text("J'ai un compte, "),
               TextButton(
-                onPressed: () => goToPage(context, const Login()),
+                onPressed: () => goToPage(context, Login()),
                 child: const Text("se connecter",
                     style: TextStyle(
                         color: Colors.blue, fontWeight: FontWeight.w500)),
@@ -216,5 +246,35 @@ class FormContainer extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void createAccountHandler() async {
+    if (formKey.currentState?.validate() ?? false) {
+      imageUrl =  await upLoadImage(cc.signupPhotoDoctor.toString());
+      final userCredentialOrError = await auth.signUp(
+          email: emailController.text.trim(), password: passwordController.text);
+      userCredentialOrError.fold(
+        (userCredential) {
+          //set user data into firestore
+          _setUserDataToFireStore(userCredential);
+          // AuthSnackBar.signInSuccess("Compte créer avec Succès", "");
+          goToPage(context, Login());
+        }, 
+        (error) {}
+      );
+    }
+  }
+
+  void _setUserDataToFireStore(UserCredential userCredential) {
+    Store(FirebaseFirestore.instance).store.doc(userCredential.user?.uid).set({
+      'name': nameController.text.trim(),
+      'number': numberController.text.trim(),
+      'speciality': _selectedSpeciality,
+      'about': aboutController.text.trim(),
+      'isDoctor': true,
+      'profilImage': imageUrl,
+    });
+    AuthSnackBar.signInSuccess("Compte créer avec Succès", "");
+    // Fluttertoast.showToast(msg: "Compte créer avec Succès");
   }
 }

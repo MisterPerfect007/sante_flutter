@@ -10,7 +10,10 @@ class CategoriesController extends GetxController {
   RxString signupPhotoDoctor = ''.obs;
   RxString signupPhotoPatient = ''.obs;
 
-  setSignupPhotoDoctor(photoUrl) => signupPhotoDoctor.value = photoUrl;
+  setSignupPhotoDoctor(photoUrl) { 
+    signupPhotoDoctor.value = photoUrl;
+    print(photoUrl);
+  }
 
   setSignupPhoto(photoUrl) => signupPhotoDoctor.value = photoUrl;
 

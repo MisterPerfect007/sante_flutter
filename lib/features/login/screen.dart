@@ -5,27 +5,27 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sante_app/core/navigator/navigator.dart';
 import 'package:sante_app/features/login/utils.dart';
+import 'package:sante_app/screens/home/widget/doctor.dart';
 
 import '../../core/custom form field/custom_password_form_field.dart';
 import '../../core/custom form field/custom_text_form_field.dart';
 import '../../core/custom form field/login_app_bar.dart';
+import '../../screens/doctor/doctor.dart';
+import '../../screens/home.dart';
 import '../../services/auth/auth.dart';
 import '../../services/auth/errors/auth_errors.dart';
 import '../signup/switching_screen.dart';
 
 class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+  Login({Key? key}) : super(key: key);
 
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  // final TextEditingController passwordConfirmationController =
+  //     TextEditingController();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    
-
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    // final TextEditingController passwordConfirmationController =
-    //     TextEditingController();
-    final formKey = GlobalKey<FormState>();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -85,9 +85,7 @@ class Login extends StatelessWidget {
                         const SizedBox(height: 40),
                         ElevatedButton(
                           onPressed: () async {
-                            if (formKey.currentState?.validate() ?? false) {
-                              await handleUserSignin(emailController.text.trim(), passwordController.text);
-                            }
+                            await _handleSignin();
                           },
                           style: ElevatedButton.styleFrom(
                             primary: const Color(0xff137fff),
@@ -125,5 +123,12 @@ class Login extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _handleSignin() async {
+    if (formKey.currentState?.validate() ?? false) {
+      await handleUserSignin(
+          emailController.text.trim(), passwordController.text);
+    }
   }
 }
