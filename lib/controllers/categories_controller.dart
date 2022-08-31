@@ -8,10 +8,12 @@ class CategoriesController extends GetxController {
   var doctorsList = [].obs;
 
   RxString signupPhotoDoctor = ''.obs;
+  RxString signupPhotoNameDoctor = ''.obs;
   RxString signupPhotoPatient = ''.obs;
 
-  setSignupPhotoDoctor(photoUrl) { 
+  setSignupPhotoDoctor(photoUrl, photoName) { 
     signupPhotoDoctor.value = photoUrl;
+    signupPhotoNameDoctor.value = photoName;
     print(photoUrl);
   }
 

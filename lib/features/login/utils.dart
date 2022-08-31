@@ -15,7 +15,7 @@ Future<bool> isDoctor(String uid) async {
   // await Future.delayed(Duration(seconds: 5));
   await firestore.store.doc(uid).get().then((value) {
     userDoc = value.data();
-    isUserADoctor = true;
+    isUserADoctor = userDoc["isDoctor"] as bool;
   });
   return isUserADoctor;
 }

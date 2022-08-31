@@ -47,6 +47,8 @@ class MyApp extends StatelessWidget {
                     builder: (context, snapshot) {
                       bool? isUserADoctor = snapshot.data;
                       if (isUserADoctor != null) {
+                        print(isUserADoctor);
+                        print(isUserADoctor.runtimeType);
                         return isUserADoctor
                             ? const DoctorSpace()
                             : const Home();

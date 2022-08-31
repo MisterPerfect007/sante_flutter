@@ -7,14 +7,14 @@ import 'package:image_picker/image_picker.dart';
 import '../../controllers/categories_controller.dart';
 
 class ImagePicking extends StatefulWidget {
-  ImagePicking({Key? key}) : super(key: key);
+  const ImagePicking({Key? key}) : super(key: key);
 
   @override
   State<ImagePicking> createState() => _ImagePickingState();
 }
 
 class _ImagePickingState extends State<ImagePicking> {
-  String? currentImage;
+  XFile? currentImage;
   final CategoriesController cc = Get.put(CategoriesController());
 
   @override
@@ -25,7 +25,7 @@ class _ImagePickingState extends State<ImagePicking> {
       if (image == null) return;
       // File()
       setState(() {
-        currentImage = image.path;
+        currentImage = image;
       });
     }
 
@@ -60,7 +60,7 @@ class _ImagePickingState extends State<ImagePicking> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(200)),
                       child: Image.file(
-                        File(currentImage!),
+                        File(currentImage!.path),
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
@@ -75,7 +75,7 @@ class _ImagePickingState extends State<ImagePicking> {
                     // color: Colors.green,
                     child: ElevatedButton(
                         onPressed: () {
-                          cc.setSignupPhotoDoctor(currentImage);
+                          cc.setSignupPhotoDoctor(currentImage?.path, currentImage?.name);
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(primary: Colors.green),
