@@ -9,7 +9,8 @@ import 'package:sante_app/screens/home/widget/top_doctors.dart';
 import '../services/auth/auth.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  final User user;
+  const Home({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +55,23 @@ class Home extends StatelessWidget {
               Container(
                 height: 100,
                 width: 100,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(50)),
-                    image: DecorationImage(
-                        image: ExactAssetImage('assets/default-avatar.png'))),
+                // decoration: const BoxDecoration(
+                //     borderRadius: BorderRadius.all(Radius.circular(50)),
+                //     image: DecorationImage(
+                //         image: ExactAssetImage('assets/default-avatar.png'))),
               ),
-              const SizedBox(height: 20,),
-              const Text("test1@test.com"),
-              const SizedBox(height: 20,),
-              TextButton(onPressed: (){
-                auth.signOut;
-              }, child: const Text("Déconnection"))
+              const SizedBox(
+                height: 20,
+              ),
+              Text(user.email ?? ''),
+              const SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                  onPressed: () {
+                    auth.signOut;
+                  },
+                  child: const Text("Déconnection"))
             ],
           ),
         ),
@@ -86,19 +93,13 @@ class _BodyContentState extends State<BodyContent> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Header(),
-      SizedBox(
-        height: 30,
-      ),
-      SearchInput(),
-      SizedBox(
-        height: 15,
-      ),
+      const Header(),
+      const SizedBox(height: 30),
+      const SearchInput(),
+      const SizedBox(height: 15),
       Categories(),
-      SizedBox(
-        height: 30,
-      ),
-      Expanded(child: TopDoctors())
+      const SizedBox(height: 30),
+      const Expanded(child: TopDoctors())
     ]);
   }
 }

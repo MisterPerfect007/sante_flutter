@@ -19,16 +19,16 @@ class Header extends StatelessWidget {
             ),
           ),
           Expanded(child: Container(),),
-          Container(
-            height: 50,
-            width: 50,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-              image: DecorationImage(
-                image: ExactAssetImage('assets/default-avatar.png')
-              )
-            ),
-          )
+          // Container(
+          //   height: 50,
+          //   width: 50,
+          //   decoration: const BoxDecoration(
+          //     borderRadius: BorderRadius.all(Radius.circular(50)),
+          //     image: DecorationImage(
+          //       image: ExactAssetImage('assets/default-avatar.png')
+          //     )
+          //   ),
+          // )
         ],
       ),
     );

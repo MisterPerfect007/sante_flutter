@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import '../../services/auth/auth.dart';
 
 class DoctorSpace extends StatefulWidget {
-  const DoctorSpace({Key? key}) : super(key: key);
+  final User user;
+  const DoctorSpace({Key? key, required this.user}) : super(key: key);
 
   @override
   State<DoctorSpace> createState() => _DoctorSpaceState();
@@ -94,7 +95,7 @@ class _DoctorSpaceState extends State<DoctorSpace> {
                         image: ExactAssetImage('assets/default-avatar.png'))),
               ),
               const SizedBox(height: 20,),
-              const Text("test1@test.com"),
+              Text(widget.user.email ?? ""),
               const SizedBox(height: 20,),
               TextButton(onPressed: (){
                 auth.signOut;
